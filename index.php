@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'database.php';
 session_start();
 if (!isset($_SESSION['username_member'])) {
     header("Location: login.php");
@@ -21,8 +22,8 @@ $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $nama = $row['nama'];
 
-var_dump($rows_angkatan);
-var_dump($row_angkatan);
+//var_dump($rows_angkatan);
+//var_dump($row_angkatan);
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
