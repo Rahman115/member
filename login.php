@@ -8,15 +8,17 @@ if (isset($_SESSION['username_member'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = hash('sha256', $_POST['password']); // Hash the input password using SHA-256
+    $username = mysqli_real_escape_string($db, $_POST['username_member']);
+    $password = hash('sha256', $_POST['password_member']); // Hash the input password using SHA-256
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-    $result = mysqli_query($conn, $sql);
+    //var_dump($email);
+    //var_dump($password);
+    $sql = "SELECT * FROM member WHERE username='$username' AND password='$password'";
+    $result = mysqli_query($db, $sql);
 
     if ($result->num_rows > 0) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['username'] = $row['username'];
+        $_SESSION['username_member'] = $row['username'];
         header("Location: index.php");
         exit();
     } else {
