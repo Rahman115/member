@@ -1,9 +1,33 @@
 <?php
-//echo "saya login.php";
+include 'config.php';
+session_start();
+
+if (isset($_SESSION['username_member'])) {
+    header("Location: index.php");
+    exit();
+}
+
+if (isset($_POST['submit'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = hash('sha256', $_POST['password']); // Hash the input password using SHA-256
+
+    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result->num_rows > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['username'] = $row['username'];
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "<script>alert('Email atau password Anda salah. Silakan coba lagi!')</script>";
+    }
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,10 +41,10 @@
         <form action="" method="POST" class="login-email">
             <p class="login-text">Anggota Argajaladri</p>
             <div class="input-group">
-                <input type="text" placeholder="Nomor Anggota" name="username-member" required>
+                <input type="text" placeholder="Nomor Anggota" name="username_member" required>
             </div>
             <div class="input-group">
-                <input type="password" placeholder="Password" name="password-member" required>
+                <input type="password" placeholder="Password" name="password_member" required>
             </div>
             <div class="input-group">
                 <button name="submit" class="btn">Login</button>
