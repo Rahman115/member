@@ -1,28 +1,28 @@
 <?php
+//include 'config.php';
+//include 'database.php';
 include 'config.php';
-include 'database.php';
 session_start();
 if (!isset($_SESSION['username_member'])) {
     header("Location: login.php");
     exit();
 }
 
+//$database = new database();
 
-$angkatan = "SELECT * FROM generation";
-$result_angkatan = mysqli_query($db, $angkatan);
-$rows_angkatan = mysqli_num_rows($result_angkatan);
-$row_angkatan = mysqli_fetch_assoc($result_angkatan);
-
+//$angkatan = new model('generation');
+//$arr = $angkatan->dataArray();
 
 
 
 
-$sql = "SELECT * FROM anggota WHERE no_induk='{$_SESSION['username_member']}'";
-$result = mysqli_query($db, $sql);
-$row = mysqli_fetch_assoc($result);
-$nama = $row['nama'];
 
-//var_dump($rows_angkatan);
+// $sql = "SELECT * FROM anggota WHERE no_induk='{$_SESSION['username_member']}'";
+// $result = mysqli_query($db, $sql);
+// $row = mysqli_fetch_assoc($result);
+// $nama = $row['nama'];
+
+// var_dump($arr);
 //var_dump($row_angkatan);
 ?>
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ $nama = $row['nama'];
             <!-- Logo + Top Nav -->
             <div id="top">
                 <h1><a href="#">Argajaladri</a></h1>
-                <div id="top-navigation"> Welcome <a href="#"><strong><?php echo $nama; ?></strong></a> <span>|</span> <a
+                <div id="top-navigation"> Welcome <a href="#"><strong><?php // echo $nama; ?></strong></a> <span>|</span> <a
                         href="#">Help</a> <span>|</span> <a href="#">Profile Settings</a> <span>|</span> <a
                         href="logout.php">Log out</a> </div>
             </div>
