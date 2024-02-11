@@ -1,6 +1,4 @@
 <?php
-//include 'config.php';
-//include 'database.php';
 include 'config.php';
 session_start();
 if (!isset($_SESSION['username_member'])) {
@@ -17,10 +15,10 @@ if (!isset($_SESSION['username_member'])) {
 
 
 
-// $sql = "SELECT * FROM anggota WHERE no_induk='{$_SESSION['username_member']}'";
-// $result = mysqli_query($db, $sql);
-// $row = mysqli_fetch_assoc($result);
-// $nama = $row['nama'];
+$sql = "SELECT * FROM anggota WHERE no_induk='{$_SESSION['username_member']}'";
+$result = mysqli_query($db, $sql);
+$row = mysqli_fetch_assoc($result);
+$nama = $row['nama'];
 
 // var_dump($arr);
 //var_dump($row_angkatan);
@@ -43,7 +41,7 @@ if (!isset($_SESSION['username_member'])) {
             <!-- Logo + Top Nav -->
             <div id="top">
                 <h1><a href="#">Argajaladri</a></h1>
-                <div id="top-navigation"> Welcome <a href="#"><strong><?php // echo $nama; ?></strong></a> <span>|</span> <a
+                <div id="top-navigation"> Welcome <a href="#"><strong><?php echo $nama; ?></strong></a> <span>|</span> <a
                         href="#">Help</a> <span>|</span> <a href="#">Profile Settings</a> <span>|</span> <a
                         href="logout.php">Log out</a> </div>
             </div>
