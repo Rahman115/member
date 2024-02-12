@@ -19,7 +19,8 @@ $nama = $row['nama'];
 
 
 $ns = new menus();
-
+$table = new resultset('generation');
+$tb_angkatan = $table->toArray();
 
 ?>
 
@@ -43,9 +44,76 @@ $ns = new menus();
     <?php
     echo $ns->nav($nama, 'angkatan');
     echo $ns->start_container('Angkatan');
+    ?>
+    <!-- Content -->
+    <div id="content">
+        <!-- Box -->
+        <div class="box">
+            <!-- Box Head -->
+            <div class="box-head">
+                <h2 class="left">Artikel </h2>
+
+            </div>
+
+            <!-- Table -->
+            <div class="table">
+                <table id="tabel-data" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th width="13"><input type="checkbox" class="checkbox" /></th>
+                            <th>Nama Angkatan</th>
+                            <th>Arti Angkatan</th>
+                            <th>Tahun</th>
+                            <th width="110" class="ac">Content Control</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php
+                        for ($i = 0; $i < count($tb_angkatan); $i++) {
+                            ?>
+                            <tr <?php if ($i % 2) {
+                                echo "class='odd'";
+                            } ?>>
+                                <td><input type="checkbox" class="checkbox" /></td>
+                                <td>
+                                    <h3><a href="#">
+                                            <?php echo $tb_angkatan[$i]['name']; ?>
+                                        </a></h3>
+                                </td>
+                                <td>
+                                    <?php echo $tb_angkatan[$i]['arti']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $tb_angkatan[$i]['year']; ?>
+                                </td>
+                                <td><a href="#" class="ico del">Delete</a><a href="#" class="ico edit">Edit</a></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <!-- Pagging -->
+                <!-- <div class="pagging">
+                    <div class="left">Showing 1-12 of 44</div>
+                    <div class="right"> <a href="#">Previous</a> <a href="#">1</a> <a href="#">2</a> <a href="#">3</a>
+                        <a href="#">4</a> <a href="#">245</a> <span>...</span> <a href="#">Next</a> <a href="#">View
+                            all</a>
+                    </div>
+                </div> -->
+                <!-- End Pagging -->
+            </div>
+            <!-- Table -->
+        </div>
+    </div>
+    <?php
     echo $ns->end_container();
     echo $ns->footers();
     ?>
+    <script>
+        $(document).ready(function () {
+            $('#tabel-data').DataTable();
+        });
+    </script>
 </body>
 
 </html>

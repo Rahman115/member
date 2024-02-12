@@ -12,12 +12,14 @@ if (!isset($_SESSION['username_member'])) {
 // $data = $database->getAll('generation');
 
 $table = new resultset('generation');
+$artikel = new resultset('artikel');
 $mn = new menus();
 // var_dump($table->toArray());
 //$angkatan = new model('generation');
 //$arr = $angkatan->dataArray();
 
 $tb_angkatan = $table->toArray();
+$tb_artikel = $artikel->toArray();
 
 
 
@@ -67,31 +69,31 @@ $nama = $row['nama'];
                     <thead>
                         <tr>
                             <th width="13"><input type="checkbox" class="checkbox" /></th>
-                            <th>Nama Angkatan</th>
-                            <th>Arti Angkatan</th>
-                            <th>Tahun</th>
+                            <th>Judul Artikel</th>
+                            <th>Penulis</th>
+                            <th>Upload</th>
                             <th width="110" class="ac">Content Control</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <?php
-                        for ($i = 0; $i < count($tb_angkatan); $i++) {
+                        for ($i = 0; $i < count($tb_artikel); $i++) {
                             ?>
                             <tr <?php if ($i % 2) {
                                 echo "class='odd'";
                             } ?>>
                                 <td><input type="checkbox" class="checkbox" /></td>
                                 <td>
-                                    <h3><a href="#">
-                                            <?php echo $tb_angkatan[$i]['name']; ?>
+                                    <h3><a href="artikel.php?action=read&follow=<?php echo $tb_artikel[$i]['link']; ?>">
+                                            <?php echo $tb_artikel[$i]['judul']; ?>
                                         </a></h3>
                                 </td>
                                 <td>
-                                    <?php echo $tb_angkatan[$i]['arti']; ?>
+                                    <?php echo $tb_artikel[$i]['penulis']; ?>
                                 </td>
                                 <td>
-                                    <?php echo $tb_angkatan[$i]['year']; ?>
+                                    <?php echo $tb_artikel[$i]['tanggal']; ?>
                                 </td>
                                 <td><a href="#" class="ico del">Delete</a><a href="#" class="ico edit">Edit</a></td>
                             </tr>
@@ -111,8 +113,44 @@ $nama = $row['nama'];
             <!-- Table -->
         </div>
     </div>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <!-- Box -->
+        <div class="box">
+            <!-- Box Head -->
+            <div class="box-head">
+                <h2>Management</h2>
+            </div>
+            <!-- End Box Head-->
+            <div class="box-content"> <a href="#" class="add-button"><span>Add new Article</span></a>
+                <div class="cl">&nbsp;</div>
+                <!-- <p class="select-all">
+                    <input type="checkbox" class="checkbox" />
+                    <label>select all</label>
+                </p> -->
+                <!-- <p><a href="#">Delete Selected</a></p> -->
+                <!-- Sort -->
+                <!-- <div class="sort">
+                    <label>Sort by</label>
+                    <select class="field">
+                        <option value="">Title</option>
+                    </select>
+                    <select class="field">
+                        <option value="">Date</option>
+                    </select>
+                    <select class="field">
+                        <option value="">Author</option>
+                    </select>
+                </div> -->
+                <!-- End Sort -->
+            </div>
+        </div>
+        <!-- End Box -->
+    </div>
+    <!-- End Sidebar -->
     <?php echo $mn->end_container(); ?>
     <!-- End Container -->
+
     <!-- Footer -->
     <?php echo $mn->footers(); ?>
     <!-- End Footer -->

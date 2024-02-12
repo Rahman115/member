@@ -6,6 +6,7 @@ include 'menus.php';
 $access = false;
 $access_edit = false;
 $detail_anggota = true;
+$message = null;
 
 
 session_start();
@@ -28,6 +29,31 @@ $ns = new menus();
 $table = new resultset('anggota');
 $tb_angg = $table->toArray();
 $dt_anggota_array = array();
+
+if (isset($_POST['dt_nama_lengkap'])) {
+    $data = array();
+
+    $data['id_anggota'] = $_POST['dt_id_anggota'];
+    $data['nama'] = $_POST['dt_nama_lengkap'];
+    $data['no_induk'] = $_POST['dt_nomor_anggota'];
+    $data['angkatan'] = $_POST['dt_angkatan'];
+    $data['tgl_lahir'] = $_POST['dt_tgl_lahir'];
+    $data['darah'] = $_POST['dt_darah'];
+    $data['kelamin'] = $_POST['dt_kelamin'];
+    $data['agama'] = $_POST['dt_agama'];
+    $data['pekerjaan'] = $_POST['dt_pekerjaan'];
+    $data['alamat'] = $_POST['dt_alamat'];
+    $data['hp'] = $_POST['dt_hp'];
+    $data['email'] = $_POST['dt_email'];
+    $data['lapangan'] = $_POST['dt_lapangan'];
+
+    $ss = $table->toUpdate('anggota', $data, array('id_anggota' => $data['id_anggota']));
+    if($ss == "success"){
+        $message = "Data Anda Berhasil Disimpan";
+        header("Refresh: 5");
+    }
+    // var_dump($ss);
+}
 
 if (isset($_GET['pages'])) {
     $pages = $_GET['pages'];
@@ -82,8 +108,16 @@ if (isset($_GET['pages'])) {
     echo $ns->nav($nama, 'anggota');
     echo $ns->start_container('Anggota');
     ?>
-
-
+    <?php
+    if ($message != null) {
+        ?>
+        <!-- Message OK -->
+        <div class="msg msg-ok">
+            <p><strong><?php echo $message; ?></strong></p>
+            <a href="#" class="close">close</a>
+        </div>
+        <!-- End Message OK -->
+    <?php } ?>
     <div id="content">
         <?php if ($access_edit == true) { ?>
             <div class="box">
@@ -91,11 +125,18 @@ if (isset($_GET['pages'])) {
                 <div class="box-head">
                     <h2 class="left">Edit Anggota Argajaladri</h2>
                     <div class="right">
-                        <a href="<?php echo "/anggota.php?pages=datails&detail=" . $dt_anggota_array['no_induk']; ?>" class="button">Kembali</a>
+                        <a href="<?php echo "/anggota.php?pages=datails&detail=" . $dt_anggota_array['no_induk']; ?>"
+                            class="button">Kembali</a>
                     </div>
                 </div>
                 <!-- End Box Head -->
-                <form action="#" method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <input type="hidden" name="dt_id_anggota" value="<?php echo $dt_anggota_array['id_anggota']; ?>" />
+
+                    <input type="hidden" name="dt_nomor_anggota" value="<?php echo $dt_anggota_array['no_induk']; ?>" />
+
+                    <input type="hidden" name="dt_angkatan" value="<?php echo $dt_anggota_array['angkatan']; ?>" />
+
                     <!-- Form -->
                     <div class="form">
                         <p> <span class="req">max 100 symbols</span>
@@ -105,13 +146,13 @@ if (isset($_GET['pages'])) {
                         </p>
                         <p> <span class="req"></span>
                             <label>Nomor Anggota <span>(Can't Edit)</span></label>
-                            <input type="text" class="field size1" name="dt_nomor_anggota"
-                                value="<?php echo $dt_anggota_array['no_induk']; ?>" disabled />
+                            <input type="text" class="field size1" value="<?php echo $dt_anggota_array['no_induk']; ?>"
+                                disabled />
                         </p>
                         <p> <span class="req"></span>
                             <label>Angkatan <span>(Can't Edit)</span></label>
-                            <input type="text" class="field size1" name="dt_angkatan"
-                                value="<?php echo $dt_anggota_array['angkatan']; ?>" disabled />
+                            <input type="text" class="field size1" value="<?php echo $dt_anggota_array['angkatan']; ?>"
+                                disabled />
                         </p>
                         <p> <span class="req">dd/mm/yyyy OR yyyy-mm-dd</span>
                             <label>Tanggal Lahir <span>(Required Field)</span></label>
@@ -120,7 +161,7 @@ if (isset($_GET['pages'])) {
                         </p>
                         <p> <span class="req">A/B/AB/O</span>
                             <label>Golongan Darah <span>(Required Field)</span></label>
-                            <input type="text" class="field size1" name="dt_tgl_lahir"
+                            <input type="text" class="field size1" name="dt_darah"
                                 value="<?php echo $dt_anggota_array['darah']; ?>" />
                         </p>
                         <p> <span class="req">Laki-Laki/Perempuan</span>

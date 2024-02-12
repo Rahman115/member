@@ -54,6 +54,31 @@ class database
         return $this->instance->query($this->sql);
     }
 
+    public function update($tabelName, $val=array(), $where=array()){
+        $this->sql = "UPDATE ". $tabelName ." SET ";
+        if (is_array($val)) {
+            $koma = 0;
+            foreach ($val as $key => $value) {
+                $koma++;
+                $this->sql .= "`" . $key . "`='". $value . "'";
+                if ($koma < count($val))
+                $this->sql .= ",";
+            }
+        } // end if $val
+
+        if (is_array($where)) {
+            $this->sql .= " WHERE ";
+            foreach ($where as $key => $value) {
+                
+                $this->sql .= $key . "=". $value;
+                
+            }
+        } // end if $val
+
+        //return $this->sql;
+        return $this->instance->query($this->sql);
+    }
+
 }
 
 class resultset
@@ -92,6 +117,17 @@ class resultset
             array_push($data, $record);
         }
         return $data;
+    }
+
+    public function toUpdate($tabel, $value=array(), $where=array()){
+        $data = $this->db->update($tabel, $value, $where);
+
+        if($data){
+            $message = "success";
+        } else {
+            $message = "wrong";
+        }
+        return $message;
     }
 } // end class resultset
 ?>
