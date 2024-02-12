@@ -1,60 +1,10 @@
 <?php
-class resultset
-{
-    private $query;
-    private $qr;
-
-    public function __construct($queryName)
-    {
-        $this->qr = $queryName;
-    }
-
-    public function toArray()
-    {
-        $data = array();
-
-        //$record = mysqli_fetch_assoc($this->qr);
-        //var_dump($record);
-        if ($this->qr) {
-
-            while ($record = mysqli_fetch_assoc($this->qr)) {
-                array_push($data, $record);
-
-            }
-
-        }
-        return $data;
-    }
-    /**
-        public function toObject(){
-            $data = array();
-
-            if($this->query) {
-
-                while($record = mysqli_fetch_object($this->query)){
-                    array_push($data, $record);
-                }
-
-            }
-
-            return $data;
-        }
-
-        public function numRows() {
-
-            return mysqli_num_rows($this->query);
-        }
-        **/
-} // end class
-
 class database
 {
-
     private $instance;
     private $sql;
-
+    protected $tableName;
     public $data;
-
     public function __construct()
     {
         $this->instance = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME) or die("Ada Masalah Di Koneksi! - HOSTING");
@@ -63,7 +13,7 @@ class database
 
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
-    } // end function 
+    } // end function
 
     public function getAll($tableName)
     {
@@ -106,7 +56,7 @@ class database
 
 }
 
-class model
+class resultset
 {
     public $db;
     public $result;
@@ -121,50 +71,27 @@ class model
 
     }
 
-    public function rows()
-    {
-
-        // return $this->tabelName;
-        //return $this->db->getAll($this->tabelName)->numRows();
-
-        return mysqli_num_rows($this->db->getAll($this->tabelName));
-    }
-
-    public function dataArray()
+    public function toArray()
     {
         $data = array();
         $result = $this->db->getAll($this->tabelName);
 
-        /**
-                if($this->db->getAll($this->tabelName)) {
-        **/
         while ($record = $result->fetch_assoc()) {
             // printf("%s (%s)\n", $record['judul'], $record['tanggal']);
             array_push($data, $record);
         }
-        /**
-                }
-                **/
-        //return mysqli_fetch_assoc($this->db->getAll($this->tabelName));
 
         return $data;
     }
 
-    public function dataGetWhere($where = array())
+    public function toWhere($where = array())
     {
-
         $data = array();
         $result = $this->db->getWhere($this->tabelName, $where);
-
-
         while ($record = $result->fetch_assoc()) {
-            // printf("%s (%s)\n", $record['judul'], $record['tanggal']);
             array_push($data, $record);
         }
-        //var_dump($data);
         return $data;
-
     }
-} // end class Model
-
+} // end class resultset
 ?>
