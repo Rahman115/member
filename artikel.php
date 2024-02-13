@@ -48,6 +48,29 @@ if (isset($_GET['action'])) {
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $str = strtolower($_POST['i_judul_artikel']);
+    $option = trim($str);
+    $link = str_replace(' ', '_', $option);
+    $ID = $_POST['i_id'];
+
+    $data = array();
+    $data['judul'] = $_POST['i_judul_artikel'];
+    $data['link'] = $link;
+    $data['penulis'] = $_POST['i_edit'];
+    $data['isi'] = $_POST['i_deskripsi'];
+    $data['tanggal'] = $_POST['i_tanggal'];
+    $data['waktu'] = $_POST['i_waktu'];
+
+    $msg = $artikel->toUpdate('artikel', $data, array('id_artikel' => $ID));
+
+    if ($msg == "success") {
+        $message = "Data Anda Berhasil Disimpan";
+        header("Refresh: 5");
+        header("Location: index.php");
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +86,7 @@ if (isset($_GET['action'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
 
     <script type="text/javascript" src="https://rahman115.github.io/editor/ckeditor.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.ckbox.io/CKBox/2.0.0/ckbox.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 </head>
@@ -85,31 +109,43 @@ if (isset($_GET['action'])) {
                         <?php echo $art['judul']; ?>
                     </h2>
                 </div>
-                <div class="form">
-                    <p> <span class="req">max 100 symbols</span>
-                        <label>Article Title <span>(Required Field)</span></label>
-                        <input type="text" class="field size1" name="i_judul_artikel"
-                            value="<?php echo $art['judul']; ?>" />
-                    </p>
-                    <p> <span class="req">max 100 symbols</span>
-                        <label>Content <span>(Required Field)</span></label>
-                    <div id="editor">
-                        <textarea class='ckeditor' id="ckeditor" rows="40" cols="30"
-                            name="i_deskripsi"><?php echo $art['isi']; ?></textarea>
+                <form action="artikel.php" method="post">
+                    <div class="form">
+                        <p> <span class="req">max 100 symbols</span>
+                            <label>Article Title <span>(Required Field)</span></label>
+                            <input type="text" class="field size1" name="i_judul_artikel"
+                                value="<?php echo $art['judul']; ?>" />
+                            <input type="hidden" name="i_edit" value="<?php echo $write; ?>" />
+                            <input type="hidden" name="i_id" value="<?php echo $art['id_artikel']; ?>" />
+                        </p>
+                        <p> <span class="req"></span>
+                            <label>Penulis <span>(Don't Edit)</span></label>
+                            <input type="text" class="field size1" value="<?php echo $nama; ?>" />
+                        </p>
+                        <p> <span class="req">max 100 symbols</span>
+                            <label>Content <span>(Required Field)</span></label>
+                        <div id="editor">
+                            <textarea class='ckeditor' id="ckeditor" rows="40" cols="30"
+                                name="i_deskripsi"><?php echo $art['isi']; ?></textarea>
+                        </div>
+                        </p>
+                        <p> <span class="req">Date</span>
+                            <label>Tanggal <span>(Required Field)</span></label>
+                            <input type="date" class="field size1" name="i_tanggal"
+                                value="<?php echo $art['tanggal']; ?>" />
+                        </p>
+                        <p> <span class="req">dd:mm:dd</span>
+                            <label>Tanggal <span>(Required Field)</span></label>
+                            <input type="text" class="field size1" name="i_waktu" value="<?php echo $art['waktu']; ?>" />
+                        </p>
                     </div>
-                    </p>
-                    <p> <span class="req">Date</span>
-                        <label>Tanggal <span>(Required Field)</span></label>
-                        <input type="date" class="field size1" name="i_tanggal" value="<?php echo $art['tanggal']; ?>" />
-                    </p>
-                </div>
-                <!-- End Form -->
-                <!-- Form Buttons -->
-                <div class="buttons">
-                    <input type="button" class="button" value="preview" />
-                    <input type="submit" class="button" value="submit" />
-                </div>
-                <!-- End Form Buttons -->
+                    <!-- End Form -->
+                    <!-- Form Buttons -->
+                    <div class="buttons">
+                        <input type="button" class="button" value="preview" />
+                        <input type="submit" class="button" value="submit" />
+                    </div>
+                    <!-- End Form Buttons -->
                 </form>
 
             </div>
@@ -159,31 +195,31 @@ if (isset($_GET['action'])) {
         $(document).ready(function () {
             $('#tabel-data').DataTable();
         });
+        CKEDITOR.replace('editor1');
+        // CKEDITOR.editorConfig = function (config) {
+        //     config.language = 'es';
+        //     config.uiColor = '#F7B42C';
+        //     config.height = 300;
+        //     config.toolbarCanCollapse = true;
 
-        CKEDITOR.editorConfig = function (config) {
-            config.language = 'es';
-            config.uiColor = '#F7B42C';
-            config.height = 300;
-            config.toolbarCanCollapse = true;
+        //     config.toolbarGroups = [
+        //         { name: 'document', groups: ['mode', 'document', 'doctools'] },
+        //         { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+        //         { name: 'forms', groups: ['forms'] },
+        //         { name: 'clipboard', groups: ['clipboard', 'undo'] },
+        //         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+        //         { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+        //         { name: 'links', groups: ['links'] },
+        //         { name: 'insert', groups: ['insert'] },
+        //         { name: 'styles', groups: ['styles'] },
+        //         { name: 'colors', groups: ['colors'] },
+        //         { name: 'tools', groups: ['tools'] },
+        //         { name: 'others', groups: ['others'] },
+        //         { name: 'about', groups: ['about'] }
+        //     ];
 
-            config.toolbarGroups = [
-                { name: 'document', groups: ['mode', 'document', 'doctools'] },
-                { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-                { name: 'forms', groups: ['forms'] },
-                { name: 'clipboard', groups: ['clipboard', 'undo'] },
-                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-                { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-                { name: 'links', groups: ['links'] },
-                { name: 'insert', groups: ['insert'] },
-                { name: 'styles', groups: ['styles'] },
-                { name: 'colors', groups: ['colors'] },
-                { name: 'tools', groups: ['tools'] },
-                { name: 'others', groups: ['others'] },
-                { name: 'about', groups: ['about'] }
-            ];
-
-            config.removeButtons = 'Copy,Paste,Anchor,Strike,Subscript,Superscript,Cut';
-        };
+        //     config.removeButtons = 'Copy,Paste,Anchor,Strike,Subscript,Superscript,Cut';
+        // };
     </script>
 </body>
 
