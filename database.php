@@ -79,6 +79,38 @@ class database
         return $this->instance->query($this->sql);
     }
 
+    public function delete($tabelName, $where=array()){
+        // empty
+    }
+
+    public function insert($tabelName, $val=array()){
+        $this->sql = "INSERT INTO ". $tabelName ." ";
+        if (is_array($val)) {
+            $koma = 0;
+            $j = 0;
+            $this->sql .= " (";
+            foreach ($val as $key => $value) {
+                $koma++;
+                $this->sql .= "`" . $key . "`";
+                if ($koma < count($val))
+                $this->sql .= ",";
+            }
+            $this->sql .= ") VALUES (";
+
+            foreach ($val as $key => $value) {
+                $j++;
+                $this->sql .= "'" . $value . "'";
+                if ($j < count($val))
+                $this->sql .= ",";
+            }
+
+            $this->sql .= ")";
+        } // end if $val
+
+        // return $this->sql;
+        return $this->instance->query($this->sql);
+    }
+
 }
 
 class resultset
@@ -128,6 +160,19 @@ class resultset
             $message = "wrong";
         }
         return $message;
-    }
+    } // end function of toUpdate
+
+    public function toInsert($tabel, $value=array()){
+        $data = $this->db->insert($tabel, $value);
+
+        if($data){
+            $message = "success";
+        } else {
+            $message = "wrong";
+        }
+        // return $data;
+        return $message;
+    } // end function of toUpdate
+
 } // end class resultset
 ?>

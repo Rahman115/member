@@ -27,6 +27,7 @@ $sql = "SELECT * FROM anggota WHERE no_induk='{$_SESSION['username_member']}'";
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_assoc($result);
 $nama = $row['nama'];
+$id = $row['no_induk'];
 
 // var_dump($arr);
 //var_dump($row_angkatan);
@@ -122,7 +123,8 @@ $nama = $row['nama'];
                 <h2>Management</h2>
             </div>
             <!-- End Box Head-->
-            <div class="box-content"> <a href="/artikel.php?action=add&follow=new-artikel" class="add-button"><span>Add New Article</span></a>
+            <div class="box-content"> <a href="/artikel.php?action=add&follow=new-artikel" class="add-button"><span>Add
+                        New Article</span></a>
                 <div class="cl">&nbsp;</div>
                 <!-- <p class="select-all">
                     <input type="checkbox" class="checkbox" />
@@ -144,6 +146,22 @@ $nama = $row['nama'];
                 </div> -->
                 <!-- End Sort -->
             </div>
+
+        </div>
+        <!-- End Box -->
+        <!-- Box -->
+        <div class="box">
+            <!-- Box Head -->
+            <div class="box-head">
+                <h2>Kategori</h2>
+            </div>
+            <!-- End Box Head-->
+            <div class="box-content"> <a href="/artikel.php?action=add&follow=new-artikel" class="add-button"><span>Add
+                        Kategori</span></a>
+                <div class="cl">&nbsp;</div>
+                <p><span>Ivent</span><span>Materi</span><span>Informasi</span></p>
+            </div>
+
         </div>
         <!-- End Box -->
     </div>
@@ -154,6 +172,10 @@ $nama = $row['nama'];
     <!-- Footer -->
     <?php echo $mn->footers(); ?>
     <!-- End Footer -->
+
+    <!-- <footer id="footer"
+        style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: red; color: white; text-align: center;">
+        Foot</footer> -->
     <script>
         $(document).ready(function () {
             $('#tabel-data').DataTable();

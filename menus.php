@@ -13,7 +13,7 @@ class menus
         $cd .= '<h1><a href="#">Argajaladri</a></h1>';
         $cd .= '<div id="top-navigation"> Welcome <a href="#"><strong>';
         $cd .= $value;
-        $cd .= '</strong></a> <span>|</span> <a href="#">Help</a> <span>|</span> <a href="#">Profile';
+        $cd .= '</strong></a> <span>|</span> <a href="https://rahman115.github.io/member.argajaladri.or.id/" target="_blank">Help</a> <span>|</span> <a href="#">Profile';
         $cd .= 'Settings</a> <span>|</span> <a href="logout.php">Log out</a> </div>';
         $cd .= '</div>';
         //<!-- End Logo + Top Nav -->
@@ -79,11 +79,9 @@ class menus
 
     public function footers()
     {
-        $f = '<div id="footer">';
+        $f = '<div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: red; color: white; text-align: center;">';
         $f .= '<div class="shell">';
-        $f .= '<span class="left">&copy; 2020 - Argajaladri V.1</span>';
-        $f .= '<span class="right"><a href="https://rahman115.github.io/member.argajaladri.or.id/">PATH</a> </span>';
-        $f .= '<span class="right"> | </span>';
+        $f .= '<span class="left">&copy; 2020 - Argajaladri V.1.14_02_2024</span>';
         $f .= '<span class="right"> Design by <a href="https://abuduchoy.my.id">abuduchoy.my.id</a> </span>';
         
         $f .= '</div>';

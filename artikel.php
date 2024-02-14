@@ -64,26 +64,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $str = strtolower($_POST['i_judul_artikel']);
-    $option = trim($str);
-    $link = str_replace(' ', '_', $option);
-    $ID = $_POST['i_id'];
+    // var_dump($_POST['submit']);
+    if (isset($_POST['submit']) && !empty($_POST['submit'])) {
+        switch ($_POST['submit']) {
+            case 'Simpan':
+                $data = array();
+                $data['id_artikel'] = null;
+                $data['id_kategori'] = '2';
 
-    $data = array();
-    $data['judul'] = $_POST['i_judul_artikel'];
-    $data['link'] = $link;
-    $data['penulis'] = $_POST['i_edit'];
-    $data['isi'] = $_POST['i_deskripsi'];
-    $data['tanggal'] = $_POST['i_tanggal'];
-    $data['waktu'] = $_POST['i_waktu'];
 
-    $msg = $artikel->toUpdate('artikel', $data, array('id_artikel' => $ID));
+                if (isset($_POST['i_judul_artikel']) && !empty($_POST['i_judul_artikel'])) {
+                    $rm_tags = strip_tags($_POST['i_judul_artikel']);
+                    $data['judul'] = preg_replace('/[^\p{L}\p{N}\s]/u', '', $rm_tags);
+                }
 
-    if ($msg == "success") {
-        $message = "Data Anda Berhasil Disimpan";
-        header("Refresh: 5");
-        header("Location: index.php");
+                $str = strtolower($data['judul']);
+                $option = trim($str);
+                $link = str_replace(' ', '_', $option);
+                // $ID = null;
+                $data['link'] = $link;
+                $data['penulis'] = $_POST['i_edit'];
+                $data['isi'] = $_POST['i_deskripsi'];
+                $data['tanggal'] = $_POST['i_tanggal'];
+                $data['waktu'] = $_POST['i_waktu'];
+
+                $kd_key = $_POST['kode_keys'];
+                $data['images'] = $kd_key . ";" . $_POST['i_keys'];
+                $msg = $artikel->toInsert('artikel', $data);
+                // var_dump($msg);
+                if ($msg == "success") {
+                    $message = "Data Anda Berhasil Disimpan";
+                    header("Refresh: 5");
+                    header("Location: index.php");
+                }
+
+                break;
+            case 'Edit':
+                $str = strtolower($_POST['i_judul_artikel']);
+                $option = trim($str);
+                $link = str_replace(' ', '_', $option);
+                $ID = $_POST['i_id'];
+
+                $data = array();
+                $data['judul'] = $_POST['i_judul_artikel'];
+                $data['link'] = $link;
+                $data['penulis'] = $_POST['i_edit'];
+                $data['isi'] = $_POST['i_deskripsi'];
+                $data['tanggal'] = $_POST['i_tanggal'];
+                $data['waktu'] = $_POST['i_waktu'];
+                $kd_key = $_POST['kode_keys'];
+                $data['images'] = $kd_key . ";" . $_POST['i_keys'];
+
+                $msg = $artikel->toUpdate('artikel', $data, array('id_artikel' => $ID));
+
+                if ($msg == "success") {
+                    $message = "Data Anda Berhasil Disimpan";
+                    header("Refresh: 5");
+                    header("Location: index.php");
+                }
+                break;
+        }
     }
+
+
 }
 
 ?>
@@ -124,11 +167,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </h2>
                 </div>
                 <form action="artikel.php" method="post">
+                    <input type="hidden" name="i_edit" value="<?php echo $write; ?>" />
                     <div class="form">
                         <p> <span class="req">max 100 symbols</span>
                             <label>Article Title <span>(Required Field)</span></label>
-                            <input type="text" class="field size1" name="i_judul_artikel"
-                              placeholder="Artcle Title"  autofocus />
+                            <input type="text" class="field size1" name="i_judul_artikel" placeholder="Artcle Title"
+                                autofocus />
                         </p>
                         <p> <span class="req"></span>
                             <label>Content <span>(Required Field)</span></label>
@@ -143,17 +187,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </p>
                         <p> <span class="req">dd:mm:dd</span>
                             <label>Tanggal <span>(Required Field)</span></label>
-                            <input type="text" class="field size1" name="i_waktu" placeholder="input time (hour:minute:second)" />
+                            <input type="text" class="field size1" name="i_waktu"
+                                placeholder="input time (hour:minute:second)" />
                         </p>
-                        <p> <span class="req">Link google drive <a href="https://github.com/Rahman115/member.argajaladri.or.id?tab=readme-ov-file#cara-memasukkan-link-google-drive-ke-form-artikel" target="_blank">( Example )</a></span>
-                            <label>Images <span>(Required Field)</span></label>
-                            <input type="link" class="field size1" name="i_waktu" placeholder="Input link google drive" />
+                        <p> <span class="req"><a
+                                    href="https://github.com/Rahman115/member.argajaladri.or.id?tab=readme-ov-file#cara-memasukkan-link-google-drive-ke-form-artikel"
+                                    target="_blank">Key google drive</a> | <a href="#">Key Youtube</a> </span>
+
+
+                            <label><input type="radio" name="kode_keys" value="Images"> Drive Image OR <input type="radio"
+                                    name="kode_keys" value="Video"> Youtube<span>(Required Field)</span></label>
+                            <input type="link" class="field size1" name="i_keys" placeholder="Insert Kode Keys" />
                         </p>
                     </div>
                     <!-- End Form -->
                     <!-- Form Buttons -->
                     <div class="buttons">
-                        <input type="submit" class="button" value="submit" />
+                        <input type="submit" class="button" name="submit" value="Simpan" />
                     </div>
                     <!-- End Form Buttons -->
                 </form>
@@ -204,12 +254,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <label>Tanggal <span>(Required Field)</span></label>
                             <input type="text" class="field size1" name="i_waktu" value="<?php echo $art['waktu']; ?>" />
                         </p>
+                        <p> <span class="req"><a
+                                    href="https://github.com/Rahman115/member.argajaladri.or.id?tab=readme-ov-file#cara-memasukkan-link-google-drive-ke-form-artikel"
+                                    target="_blank">Key google drive</a> | <a href="#">Key Youtube</a> </span>
+                            <?php
+
+                            $ex = $art['images'];
+                            $exp = explode(';', $ex);
+                            $radio = $exp[0];
+                            $imgs = $exp[1];
+                            ?>
+
+                            <label>
+                                <input type="radio" name="kode_keys" value="Images" <?php if ($radio == "Images")
+                                    echo "checked"; ?> /> Drive Image OR
+                                <input type="radio" name="kode_keys" value="Video" <?php if ($radio == "Video")
+                                    echo "checked"; ?> /> Youtube
+                                <span>(Required Field)</span>
+                            </label>
+                            <input type="text" class="field size1" name="i_keys" value="<?php echo $imgs; ?>" />
+                        </p>
                     </div>
                     <!-- End Form -->
                     <!-- Form Buttons -->
                     <div class="buttons">
-                        <input type="button" class="button" value="preview" />
-                        <input type="submit" class="button" value="submit" />
+                        <input type="submit" class="button" name="submit" value="Edit" />
                     </div>
                     <!-- End Form Buttons -->
                 </form>
@@ -285,7 +354,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //     ];
 
         //     config.removeButtons = 'Copy,Paste,Anchor,Strike,Subscript,Superscript,Cut';
-    // };
+        // };
     </script>
 </body>
 
