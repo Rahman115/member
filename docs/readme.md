@@ -10,7 +10,7 @@ The development in this application is in the form of argajaladri member files
 2. Silahkan gunakan Google Dirve anda atau gunakan Akun Argajaladri
 
 > [!NOTE]
-> Admin sudah mempersiapkan foleder `Drive Saya > Data Website > gamber_artikel` untuk mengumpulkan gambar artikel.
+> Admin sudah mempersiapkan **folder** di dalam `Drive Saya > Data Website > gamber_artikel` untuk mengumpulkan gambar artikel.
 
 3. Pilih Gambar yang akan di posting di Artikel
 
@@ -20,11 +20,11 @@ The development in this application is in the form of argajaladri member files
 
 4. Pilih (1) `: (titik 3)`, kemudian pilih (2) `Bagikan >` dan pilih (3) `Bagikan` **Seperti terlihat pada gambar**
         ![Build Status](https://lh3.googleusercontent.com/d/14yeVZbuUmY7ovt3Q2LyEX4De0FT6llTa)
-5. Setelah muncul tampilan `Bagikan "example-image.png"`, Lihat **Akses Umum** dan pastikan berada `Siapa saja yang memiliki link` dan kemudian silahkan Pilih `Salin Link` dan Pilih `Selesai`.
+5. Setelah muncul tampilan `Bagikan "example-image.png"`, Lihat **Akses Umum** dan pastikan berada pada pilihan `Siapa saja yang memiliki link` dan kemudian silahkan Pilih `Salin Link` dan Pilih `Selesai`.
 
 ![Build Status](https://lh3.googleusercontent.com/d/1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF)
 
-6. Link yang sudah di Salin, Pastekan di Browser dan Link Seperti dibawah ini 
+6. Link yang sudah di Salin, Pastekan di Browser atau dimedia lain dan Link Seperti dibawah ini :
 
 > [!NOTE]
 >
