@@ -24,9 +24,16 @@ The development in this application is in the form of argajaladri member files
 
 ![Build Status](https://lh3.googleusercontent.com/d/1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF)
 
-6. Link yang sudah di Salin, Pastekan di Browser dan Link Seperti ini https:// drive.google.com/file/d/`[Kode Gambar]`/view?usp=sharing
-   https:// drive.google.com/file/d/`1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`/view?usp=sharing
-7. Silahkan Copy `Kode Gambar` yang muncul pada link yang telah di salin **Contoh Kode** > `1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`
+6. Link yang sudah di Salin, Pastekan di Browser dan Link Seperti dibawah ini 
+
+> [!NOTE]
+>
+> - Bentuk link
+> https:// drive.google.com/file/d/**Kode Gambar**/view?usp=sharing
+> - contoh link
+> https:// drive.google.com/file/d/`1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`/view?usp=sharing
+
+7. Silahkan Copy **Kode Gambar** yang muncul pada link yang telah di salin **Contoh Kode**  `1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`
 
 ## Updates
 
