@@ -54,24 +54,25 @@ class database
         return $this->instance->query($this->sql);
     }
 
-    public function update($tabelName, $val=array(), $where=array()){
-        $this->sql = "UPDATE ". $tabelName ." SET ";
+    public function update($tabelName, $val = array(), $where = array())
+    {
+        $this->sql = "UPDATE " . $tabelName . " SET ";
         if (is_array($val)) {
             $koma = 0;
             foreach ($val as $key => $value) {
                 $koma++;
-                $this->sql .= "`" . $key . "`='". $value . "'";
+                $this->sql .= "`" . $key . "`='" . $value . "'";
                 if ($koma < count($val))
-                $this->sql .= ",";
+                    $this->sql .= ",";
             }
         } // end if $val
 
         if (is_array($where)) {
             $this->sql .= " WHERE ";
             foreach ($where as $key => $value) {
-                
-                $this->sql .= $key . "=". $value;
-                
+
+                $this->sql .= $key . "=" . $value;
+
             }
         } // end if $val
 
@@ -79,12 +80,14 @@ class database
         return $this->instance->query($this->sql);
     }
 
-    public function delete($tabelName, $where=array()){
+    public function delete($tabelName, $where = array())
+    {
         // empty
     }
 
-    public function insert($tabelName, $val=array()){
-        $this->sql = "INSERT INTO ". $tabelName ." ";
+    public function insert($tabelName, $val = array())
+    {
+        $this->sql = "INSERT INTO " . $tabelName . " ";
         if (is_array($val)) {
             $koma = 0;
             $j = 0;
@@ -93,7 +96,7 @@ class database
                 $koma++;
                 $this->sql .= "`" . $key . "`";
                 if ($koma < count($val))
-                $this->sql .= ",";
+                    $this->sql .= ",";
             }
             $this->sql .= ") VALUES (";
 
@@ -101,7 +104,7 @@ class database
                 $j++;
                 $this->sql .= "'" . $value . "'";
                 if ($j < count($val))
-                $this->sql .= ",";
+                    $this->sql .= ",";
             }
 
             $this->sql .= ")";
@@ -151,10 +154,11 @@ class resultset
         return $data;
     }
 
-    public function toUpdate($tabel, $value=array(), $where=array()){
+    public function toUpdate($tabel, $value = array(), $where = array())
+    {
         $data = $this->db->update($tabel, $value, $where);
 
-        if($data){
+        if ($data) {
             $message = "success";
         } else {
             $message = "wrong";
@@ -162,10 +166,11 @@ class resultset
         return $message;
     } // end function of toUpdate
 
-    public function toInsert($tabel, $value=array()){
+    public function toInsert($tabel, $value = array())
+    {
         $data = $this->db->insert($tabel, $value);
 
-        if($data){
+        if ($data) {
             $message = "success";
         } else {
             $message = "wrong";
