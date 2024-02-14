@@ -16,6 +16,8 @@ The development in this application is in the form of argajaladri member files
 > [!IMPORTANT]  
 > Kalau belum ada gambar silahkan Upload gambar terlebih dahulu.
 
+3. fff
+![Build Status](https://lh3.googleusercontent.com/d/1oNkK9niCNoqZrciRkUKDSGkQ7iQ8n5Ap)
 ## Updates
 - `13 Februari 2024` Fixed page issues in articles, batches and members
 - `01 Februari 2024` Open server [member.argajaladri.or.id](https://argajaladri.or.id)
