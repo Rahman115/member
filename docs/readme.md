@@ -43,5 +43,12 @@ The development in this application is in the form of argajaladri member files
 
 ## Updates
 
-- `13 Februari 2024` Fixed page issues in articles, batches and members
-- `01 Februari 2024` Open server [member.argajaladri.or.id](https://argajaladri.or.id)
+### Update 13 Februari 2024
+
+- Fixed page issues in articles, batches and members
+- Fixed Edit and Add Artikel
+
+### Update 01 Februari 2024
+
+- upload file data
+- Open server [member.argajaladri.or.id](https://argajaladri.or.id)
