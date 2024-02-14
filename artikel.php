@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <label>Tanggal <span>(Required Field)</span></label>
                             <input type="text" class="field size1" name="i_waktu" placeholder="input time (hour:minute:second)" />
                         </p>
-                        <p> <span class="req">Link google drive <a href="#" target="_blank">( Example )</a></span>
+                        <p> <span class="req">Link google drive <a href="https://github.com/Rahman115/member.argajaladri.or.id?tab=readme-ov-file#cara-memasukkan-link-google-drive-ke-form-artikel" target="_blank">( Example )</a></span>
                             <label>Images <span>(Required Field)</span></label>
                             <input type="link" class="field size1" name="i_waktu" placeholder="Input link google drive" />
                         </p>
