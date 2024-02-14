@@ -28,12 +28,18 @@ The development in this application is in the form of argajaladri member files
 
 > [!NOTE]
 >
-> - Bentuk link
-> https:// drive.google.com/file/d/**Kode Gambar**/view?usp=sharing
-> - contoh link
-> https:// drive.google.com/file/d/`1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`/view?usp=sharing
+> - **Bentuk link**
+>  https:// drive.google.com/file/d/`Kode Gambar`/view?usp=sharing
+> - **Contoh link**
+>  https:// drive.google.com/file/d/`1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`/view?usp=sharing
 
-7. Silahkan Copy **Kode Gambar** yang muncul pada link yang telah di salin **Contoh Kode**  `1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`
+7. Silahkan Copy **Kode Gambar** yang muncul pada link yang telah di salin **Contoh Kode** seperti ini `1yE57JeNhxBsbURZcFcHfMOKUuBYF4usF`
+
+8. **Kode Gambar** yang telah di Salin, Silahkan di Paste ke `Form Images` yang ada di Artikel
+
+> [!NOTE]
+>
+> Jika ada kesusahan dalam tahap ini silahkan hubungi **Admin**
 
 ## Updates
 
