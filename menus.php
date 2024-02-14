@@ -35,7 +35,7 @@ class menus
         if ($act == 'anggota')
             $cd .= 'class="active"';
         $cd .= '><span>Anggota</span></a></li>';
-        
+
         $cd .= '<li><a href="#"><span>Galeri</span></a></li>';
         $cd .= '<li><a href="#"><span>Pengurus</span></a></li>';
         $cd .= '<li><a href="#"><span>Program Kerja</span></a></li>';
@@ -80,8 +80,13 @@ class menus
     public function footers()
     {
         $f = '<div id="footer">';
-        $f .= '<div class="shell"> <span class="left">&copy; 2010 - CompanyName</span> <span class="right"> Design by <a';
-        $f .= ' href="https://abuduchoy.my.id">abuduchoy.my.id</a> </span> </div>';
+        $f .= '<div class="shell">';
+        $f .= '<span class="left">&copy; 2020 - Argajaladri V.1</span>';
+        $f .= '<span class="right"><a href="https://rahman115.github.io/member.argajaladri.or.id/">PATH</a> </span>';
+        $f .= '<span class="right"> | </span>';
+        $f .= '<span class="right"> Design by <a href="https://abuduchoy.my.id">abuduchoy.my.id</a> </span>';
+        
+        $f .= '</div>';
         $f .= '</div>';
 
         return $f;

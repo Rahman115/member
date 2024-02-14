@@ -122,7 +122,7 @@ $nama = $row['nama'];
                 <h2>Management</h2>
             </div>
             <!-- End Box Head-->
-            <div class="box-content"> <a href="#" class="add-button"><span>Add new Article</span></a>
+            <div class="box-content"> <a href="/artikel.php?action=add&follow=new-artikel" class="add-button"><span>Add New Article</span></a>
                 <div class="cl">&nbsp;</div>
                 <!-- <p class="select-all">
                     <input type="checkbox" class="checkbox" />

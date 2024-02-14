@@ -28,22 +28,37 @@ $tb_artikel = $artikel->toArray();
 $art = array();
 $read = false;
 $edit = false;
+$add = false;
 
-if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'read') {
-        $follow = $_GET['follow'];
-        $read = true;
-        $dt = $artikel->toWhere(array('link' => $follow));
-        if ($dt) {
-            $art = $dt[0];
-        }
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    // this switch statamen of GET
+    $follow = $_GET['follow'];
+    switch ($_GET['action']) {
+
+        case 'add':
+            if ($follow == 'new-artikel') {
+                $add = true;
+            }
+            break;
+
     }
-    if ($_GET['action'] == 'edit') {
-        $follow = $_GET['follow'];
-        $edit = true;
-        $dt = $artikel->toWhere(array('link' => $follow));
-        if ($dt) {
-            $art = $dt[0];
+    if (isset($_GET['action'])) {
+        if ($_GET['action'] == 'read') {
+            $follow = $_GET['follow'];
+            $read = true;
+            $dt = $artikel->toWhere(array('link' => $follow));
+            if ($dt) {
+                $art = $dt[0];
+            }
+        }
+        if ($_GET['action'] == 'edit') {
+            $follow = $_GET['follow'];
+            $edit = true;
+            $dt = $artikel->toWhere(array('link' => $follow));
+            if ($dt) {
+                $art = $dt[0];
+            }
         }
     }
 }
@@ -96,6 +111,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo $ns->nav($nama, 'dashboard');
     echo $ns->start_container('dashboard');
     ?>
+    <!-- FORM ADD ARTIKEL -->
+    <?php if ($add == true) { ?>
+        <!-- Content -->
+        <div id="content">
+            <!-- Box -->
+            <div class="box">
+                <!-- Box Head -->
+                <div class="box-head">
+                    <h2 class="left">
+                        <?php echo $art['judul']; ?>
+                    </h2>
+                </div>
+                <form action="artikel.php" method="post">
+                    <div class="form">
+                        <p> <span class="req">max 100 symbols</span>
+                            <label>Article Title <span>(Required Field)</span></label>
+                            <input type="text" class="field size1" name="i_judul_artikel"
+                              placeholder="Artcle Title"  autofocus />
+                        </p>
+                        <p> <span class="req"></span>
+                            <label>Content <span>(Required Field)</span></label>
+                        <div id="editor">
+                            <textarea class='ckeditor' id="ckeditor" rows="40" cols="30"
+                                name="i_deskripsi"><?php echo $art['isi']; ?></textarea>
+                        </div>
+                        </p>
+                        <p> <span class="req">Date</span>
+                            <label>Tanggal <span>(Required Field)</span></label>
+                            <input type="date" class="field size1" name="i_tanggal" />
+                        </p>
+                        <p> <span class="req">dd:mm:dd</span>
+                            <label>Tanggal <span>(Required Field)</span></label>
+                            <input type="text" class="field size1" name="i_waktu" placeholder="input time (hour:minute:second)" />
+                        </p>
+                        <p> <span class="req">Link google drive <a href="#" target="_blank">( Example )</a></span>
+                            <label>Images <span>(Required Field)</span></label>
+                            <input type="link" class="field size1" name="i_waktu" placeholder="Input link google drive" />
+                        </p>
+                    </div>
+                    <!-- End Form -->
+                    <!-- Form Buttons -->
+                    <div class="buttons">
+                        <input type="submit" class="button" value="submit" />
+                    </div>
+                    <!-- End Form Buttons -->
+                </form>
+
+            </div>
+        </div>
+    <?php } ?>
+    <!-- END OF FORM ADD ARTIKEL -->
     <?php
     if ($edit == true) {
         ?>
@@ -219,7 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //     ];
 
         //     config.removeButtons = 'Copy,Paste,Anchor,Strike,Subscript,Superscript,Cut';
-        // };
+    // };
     </script>
 </body>
 
