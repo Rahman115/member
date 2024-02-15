@@ -1,24 +1,28 @@
-<?php 
+<?php
 
+include 'config.php';
+include 'database.php';
 $token = '6722321373:AAH8AAzN9IPM2NBCyPGOYrHc7CYFJe2aBxM';
 $channel = '-1002041569106';
 
 if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
-	$data = file_get_contents('php://input');
-	$getData = json_decode($data, true);
-	
-	$keyboard = [
+    $data = file_get_contents('php://input');
+    $getData = json_decode($data, true);
+
+    $keyboard = [
         'inline_keyboard' => [
             [
                 ['text' => 'Set Password', 'url' => 'https://argajaladri.or.id']
             ]
         ]
     ];
-	$encodedKeyboard = json_encode($keyboard);
-	
-	$userId = $channel;
-    $email = '<i>alam Lestari!! </i> \n No Anggota : <b>' . $_POST['username'] . "</b> \n <strong> Email </strong>:" . $_POST['email'];
-	$email .= '<b>bold</b>, <strong>bold</strong>
+    $encodedKeyboard = json_encode($keyboard);
+
+    $userId = $channel;
+    $email = '<i>alam Lestari!! </i>';
+    $email .= 'No Anggota : <b>' . $_POST['username'] . "</b>";
+    $email .= "<strong> Email </strong>:" . $_POST['email'];
+    $email .= '<b>bold</b>, <strong>bold</strong>
 <i>italic</i>, <em>italic</em>
 <u>underline</u>, <ins>underline</ins>
 <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
@@ -34,12 +38,12 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
     $parameter = array(
         "chat_id" => $userId,
         "text" => $email,
-		"parse_mode" => "html",
-		"reply_markup" => $encodedKeyboard
+        "parse_mode" => "html",
+        "reply_markup" => $encodedKeyboard
     );
-	
-	$api = "https://api.telegram.org/bot" . $token. "/sendMessage";
-	
+
+    $api = "https://api.telegram.org/bot" . $token . "/sendMessage";
+
 }
 
 $ch = curl_init();
