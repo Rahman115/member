@@ -154,9 +154,9 @@ class resultset
         return $data;
     }
 
-    public function toUpdate($tabel, $value = array(), $where = array())
+    public function toUpdate($value = array(), $where = array())
     {
-        $data = $this->db->update($tabel, $value, $where);
+        $data = $this->db->update($this->tabelName, $value, $where);
 
         if ($data) {
             $message = "success";
@@ -166,9 +166,9 @@ class resultset
         return $message;
     } // end function of toUpdate
 
-    public function toInsert($tabel, $value = array())
+    public function toInsert($value = array())
     {
-        $data = $this->db->insert($tabel, $value);
+        $data = $this->db->insert($this->tabelName, $value);
 
         if ($data) {
             $message = "success";

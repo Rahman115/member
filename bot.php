@@ -2,39 +2,101 @@
 
 include 'config.php';
 include 'database.php';
+include 'class.php';
 $token = '6722321373:AAH8AAzN9IPM2NBCyPGOYrHc7CYFJe2aBxM';
 $channel = '-1002041569106';
 
-if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
-    $data = file_get_contents('php://input');
-    $getData = json_decode($data, true);
+$bot = new bot($token);
+$message = null;
 
-    $keyboard = [
-        'inline_keyboard' => [
-            [
-                ['text' => 'Set Password', 'url' => 'https://argajaladri.or.id']
-            ]
-        ]
-    ];
-    $encodedKeyboard = json_encode($keyboard);
+// call database
+$users = new resultset('anggota');
+$adm = new resultset('member');
+$ang = new resultset('generation');
+
+if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
+    $data = $bot->contect('php://input');
+
+
+    $verifikasi = false;
+    if (isset($_POST['username']) && !empty($_POST['username'])) {
+        $nomor = $_POST['username'];
+        $verifikasi = true;
+    } else {
+        $nomor = 'No Name';
+    }
+
+    $user = $users->toWhere(array('no_induk' => $nomor));
 
     $userId = $channel;
-    $email = '<i>alam Lestari!! </i>';
-    $email .= 'No Anggota : <b>' . $_POST['username'] . "</b>";
-    $email .= "<strong> Email </strong>:" . $_POST['email'];
-    $email .= '<b>bold</b>, <strong>bold</strong>
-<i>italic</i>, <em>italic</em>
-<u>underline</u>, <ins>underline</ins>
-<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
-<span class="tg-spoiler">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>
-<b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
-<a href="http://www.example.com/">inline URL</a>
-<a href="tg://user?id=123456789">inline mention of a user</a>
-<tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
-<code>inline fixed-width code</code>
-<pre>pre-formatted fixed-width code block</pre>
-<pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
-<blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>';
+    if ($verifikasi && $user != null) {
+
+        $admin = $adm->toWhere(array('username' => $user[0]['no_induk']));
+        if ($admin == null) {
+            $angkatan = $ang->toWhere(array('name' => $user[0]['angkatan']));
+            $answer = $angkatan[0]['year'];
+
+            $dtAdmin = array(
+                'username' => $user[0]['no_induk'],
+                'password' => '',
+                'email' => $_POST['email'],
+                'quest' => $answer,
+                'verifikasi' => md5($user[0]['no_induk']),
+                'status' => 'unvalid'
+            );
+
+            $cek = $adm->toInsert($dtAdmin);
+            if ($cek) {
+                $message = $dtAdmin['verifikasi'];
+            } else {
+                $message = null;
+            }
+
+        } else {
+            $message = "Anda telah punya Akun";
+        }
+
+        $keyboard = [
+            'inline_keyboard' => [
+                [
+                    ['text' => 'Set Password', 'url' => 'https://member.argajaladri.or.id/register.php?keys=' . $dtAdmin['verifikasi']]
+                ]
+            ]
+        ];
+        $encodedKeyboard = json_encode($keyboard);
+
+        $email = "<i><strong >Salam Lestari!!</strong></i>
+    <blockquote>Sistem Kami telah mengkonfirmasi identitas Anda dan merupakan salah satu Anggota Argajaladri.</blockquote>
+
+    Nama Anggota : <tg-spoiler><b>" . $user[0]['nama'] . "</b></tg-spoiler>
+    Email : <strong>" . $_POST['email'] . "</strong>
+    Angkatan : " . $user[0]['angkatan'] . "
+    <i></i>
+    
+    ";
+
+        if ($message == null) {
+            $email .= " <i> " . $message . "</i>";
+            $encodedKeyboard = "";
+        } else if ($message == "Anda telah punya Akun") {
+            $email .= " <i> " . $message . "</i>";
+            $encodedKeyboard = "";
+        } else {
+            $email .= " <blockquote> Cobalah mengingat pertanyaan ini . 
+
+            <strong>> " . $user[0]['angkatan'] . " dilantik pada tahun ?</strong></blockquote>
+            <i></i>
+            <i>Untuk melanjutkan silahkan klik <strong>Set Pasword</strong> untuk melanjutkan ...</i>";
+            $encodedKeyboard = json_encode($keyboard);
+        }
+
+
+
+    } else {
+        $email = "<blockquote>Maaf, Sistem kami tidak mengenal anda !!</blockquote>";
+        $encodedKeyboard = "";
+    }
+
     $parameter = array(
         "chat_id" => $userId,
         "text" => $email,
@@ -42,20 +104,27 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
         "reply_markup" => $encodedKeyboard
     );
 
-    $api = "https://api.telegram.org/bot" . $token . "/sendMessage";
+    // $api = "https://api.telegram.org/bot" . $token . "/sendMessage";
+
+
 
 }
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $api);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameter));
+$r = $bot->ex($parameter, "sendMessage");
 
-$result = curl_exec($ch);
-curl_close($ch);
+// $ch = curl_init();
+// curl_setopt($ch, CURLOPT_URL, $api);
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// curl_setopt($ch, CURLOPT_POST, 1);
+// curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameter));
+
+// $result = curl_exec($ch);
+// curl_close($ch);
+
+
 
 header("Location: https://t.me/+BmlAhs0rixEwOTQ1");
+// var_dump($user[0]);
 // var_dump($result);
 
 
