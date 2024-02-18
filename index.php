@@ -156,10 +156,26 @@ $id = $row['no_induk'];
                 <h2>Kategori</h2>
             </div>
             <!-- End Box Head-->
-            <div class="box-content"> <a href="/artikel.php?action=add&follow=new-artikel" class="add-button"><span>Add
-                        Kategori</span></a>
+            <div class="box-content">
+                <a href="/artikel.php?action=add&follow=new-artikel" class="add-button">
+                    <span>Add Kategori</span>
+                </a>
                 <div class="cl">&nbsp;</div>
-                <p><span>Ivent</span><span>Materi</span><span>Informasi</span></p>
+                <p style="display: grid; width:100%; grid-template-columns: auto auto;">
+                    <?php
+                    $tag = new resultset('tag');
+                    $data_tag = $tag->toArray();
+                    for ($i = 0; $i < count($data_tag); $i++) {
+                        ?>
+                        <span style="border: 1px solid rgba(0, 0, 0, 0.6); background-color: rgba(255, 255, 255, 1);
+                        border-radius: 3px; padding:5px 10px 5px 10px; margin: 4px 8px 4px 8px; text-align: center;">
+                            <?php echo $data_tag[$i]['tag_name']; ?>
+                        </span>
+                        <?php
+                    }
+                    ?>
+                </p>
+                <div class="cl">&nbsp;</div>
             </div>
 
         </div>

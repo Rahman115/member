@@ -47,7 +47,7 @@ if (isset($_POST['dt_nama_lengkap'])) {
     $data['email'] = $_POST['dt_email'];
     $data['lapangan'] = $_POST['dt_lapangan'];
 
-    $ss = $table->toUpdate('anggota', $data, array('id_anggota' => $data['id_anggota']));
+    $ss = $table->toUpdate($data, array('id_anggota' => $data['id_anggota']));
     if($ss == "success"){
         $message = "Data Anda Berhasil Disimpan";
         header("Refresh: 5");

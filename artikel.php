@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $kd_key = $_POST['kode_keys'];
                 $data['images'] = $kd_key . ";" . $_POST['i_keys'];
-                $msg = $artikel->toInsert('artikel', $data);
+                $msg = $artikel->toInsert($data);
                 // var_dump($msg);
                 if ($msg == "success") {
                     $message = "Data Anda Berhasil Disimpan";
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $kd_key = $_POST['kode_keys'];
                 $data['images'] = $kd_key . ";" . $_POST['i_keys'];
 
-                $msg = $artikel->toUpdate('artikel', $data, array('id_artikel' => $ID));
+                $msg = $artikel->toUpdate($data, array('id_artikel' => $ID));
 
                 if ($msg == "success") {
                     $message = "Data Anda Berhasil Disimpan";
