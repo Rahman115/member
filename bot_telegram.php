@@ -23,7 +23,7 @@ $parameter = array(
 
 // $apiMessage = file_get_contents("https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage?" . http_build_query($parameter));
 // print_r(json_encode($apiMessage, JSON_PRETTY_PRINT));
-// print_r(json_decode($apiMessage, true));
+print_r(json_decode($apiMessage, true));
 $apiMessage = "https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage";
 // $apiMessage = "https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage?chat_id=" . $userId . "&text=" . $botMessage;
 $ch = curl_init();

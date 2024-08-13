@@ -20,24 +20,28 @@ class menus
         //<!-- Main Nav -->
         $cd .= '<div id="navigation">';
         $cd .= '<ul>';
-        $cd .= '<li><a href="index.php"';
+        $cd .= '<li><a href="https://member.argajaladri.or.id/"';
         if ($act == 'dashboard')
             $cd .= 'class="active"';
         $cd .= '><span>Dashboard</span></a></li>';
 
-        $cd .= '<li><a href="angkatan.php" ';
+        $cd .= '<li><a href="https://member.argajaladri.or.id/angkatan.php" ';
         if ($act == 'angkatan')
             $cd .= 'class="active"';
         $cd .= '><span>Angkatan</span></a></li>';
 
 
-        $cd .= '<li><a href="anggota.php"';
+        $cd .= '<li><a href="https://member.argajaladri.or.id/anggota.php"';
         if ($act == 'anggota')
             $cd .= 'class="active"';
         $cd .= '><span>Anggota</span></a></li>';
 
         $cd .= '<li><a href="#"><span>Galeri</span></a></li>';
-        $cd .= '<li><a href="#"><span>Pengurus</span></a></li>';
+        $cd .= '<li><a href="https://member.argajaladri.or.id/pengurus.php"';
+        if ($act == 'pengurus')
+            $cd .= 'class="active"';
+
+        $cd .= '><span>Pengurus</span></a></li>';
         $cd .= '<li><a href="#"><span>Program Kerja</span></a></li>';
         $cd .= '</ul>';
         $cd .= '</div>';
@@ -83,7 +87,7 @@ class menus
         $f .= '<div class="shell">';
         $f .= '<span class="left">&copy; 2020 - Argajaladri V.1.14_02_2024</span>';
         $f .= '<span class="right"> Design by <a href="https://abuduchoy.my.id">abuduchoy.my.id</a> </span>';
-        
+
         $f .= '</div>';
         $f .= '</div>';
 

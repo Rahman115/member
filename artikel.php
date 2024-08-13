@@ -298,6 +298,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2 class="left">
                         <?php echo $art['judul']; ?>
                     </h2>
+                    <div class="right"><a href="https://member.argajaladri.or.id/artikel.php" class="button">Kembali</a>
+                    </div>
                 </div>
                 <p>
                     <a href="/artikel.php?action=edit&follow=<?php echo $art['link']; ?>" class="ico edit">
